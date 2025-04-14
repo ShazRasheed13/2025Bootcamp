@@ -1,6 +1,5 @@
 ﻿namespace UnitTests;
 using Examples.Banking;
-using System.Security.Principal;
 
 public class BankingTests
 {
