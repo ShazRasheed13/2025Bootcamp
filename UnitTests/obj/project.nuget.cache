@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "2x3+dyjVB0k=",
+  "dgSpecHash": "G2WcdfbhEDA=",
   "success": true,
-  "projectFilePath": "C:\\Users\\mafoz\\source\\repos\\2025Bootcamp\\UnitTests\\UnitTests.csproj",
+  "projectFilePath": "C:\\Users\\mafoz\\Source\\Repos\\2025Bootcamp\\UnitTests\\UnitTests.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\mafoz\\.nuget\\packages\\coverlet.collector\\6.0.2\\coverlet.collector.6.0.2.nupkg.sha512",
     "C:\\Users\\mafoz\\.nuget\\packages\\microsoft.codecoverage\\17.11.1\\microsoft.codecoverage.17.11.1.nupkg.sha512",
