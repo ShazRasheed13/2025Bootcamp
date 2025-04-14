@@ -2,12 +2,7 @@
 # *
 
 # Allow specific directories and files
-!/.gitignore
-!/**/*.cs
-!/**/*.csproj
-!/**/*.sln
-!/**/*.config
-!/**/*.json
+
 
 # Ignore build outputs
 bin/
@@ -20,6 +15,7 @@ bin/
 .vs
 .vs/**/*
 Examples/obj/
-UnitTests
+UnitTests/obj/
 .idea/
+*.cache
 
