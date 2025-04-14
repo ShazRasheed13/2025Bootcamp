@@ -15,7 +15,13 @@ bin/
 .vs
 .vs/**/*
 Examples/obj/
-UnitTests/obj/
+UnitTests/obj/**/*
+UnitTests\obj\**\*
 .idea/
 *.cache
 
+UnitTests/obj/Debug/net9.0/UnitTests.AssemblyInfo.cs
+UnitTests/obj/Debug/net9.0/UnitTests.AssemblyInfoInputs.cache
+
+UnitTests/obj/Debug/net9.0/**/*
+UnitTests\obj\Debug\net9.0\**\*
