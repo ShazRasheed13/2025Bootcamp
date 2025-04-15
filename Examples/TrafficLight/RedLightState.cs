@@ -1,6 +1,6 @@
 ﻿namespace Examples.TrafficLight;
 
-public class TrafficLightState : ITrafficLightState
+public class RedLightState : ITrafficLightState
 {
     private const int Duration = 30;
     public void Change(TrafficLight light) => light.SetState(new YellowLightState(this));
@@ -13,8 +13,8 @@ public class YellowLightState(ITrafficLightState previousState) : ITrafficLightS
     private const int Duration = 5;
     public void Change(TrafficLight light)
     {
-        if (previousState is GreenLightState) light.SetState(new TrafficLightState());
-        if (previousState is TrafficLightState) light.SetState(new GreenLightState());
+        if (previousState is GreenLightState) light.SetState(new RedLightState());
+        if (previousState is RedLightState) light.SetState(new GreenLightState());
     }
     public TrafficLightColor GetColor() => TrafficLightColor.Yellow;
     public int GetDuration() => Duration;
