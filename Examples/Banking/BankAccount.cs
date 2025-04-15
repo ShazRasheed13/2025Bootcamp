@@ -5,7 +5,7 @@
         private readonly string _accountNumber;
         private readonly decimal _balance;
         private const decimal MinimumBalance = 0.0m;
-        public BankAccount(string accountNumber, decimal initialBalance)
+        private BankAccount(string accountNumber, decimal initialBalance)
         {
             if(string.IsNullOrEmpty(accountNumber))
                 throw new ArgumentException("Account number cannot be null or empty", nameof(accountNumber));
@@ -18,11 +18,13 @@
 
         public decimal Balance() => _balance;
 
-        public static BankAccount NewSavingsAccount(string accountNumber, decimal initialBalance = 0.0m) =>
-            new BankAccount(accountNumber, initialBalance);
+        public static BankAccount NewSavingsAccount(string accountNumber, decimal initialBalance = 0.0m) => new BankAccount(accountNumber, initialBalance);
 
-        public static BankAccount NewCurrentAccount(string accountNumber) =>
-            new BankAccount(accountNumber, 10000.0m);
+        public static BankAccount NewCurrentAccount(string accountNumber, decimal initialBalance = 10000.0m)
+        {
+            if(initialBalance < 10000.0m) throw new ArgumentOutOfRangeException(nameof(initialBalance), "Initial balance for current account must be at least 10,000");
+            return new BankAccount(accountNumber, initialBalance);
+        }
 
         public BankAccount Deposit(decimal amount)
         {
@@ -33,17 +35,14 @@
 
         public BankAccount Withdraw(decimal amount)
         {
-            if (amount <= 0)
-                throw new ArgumentOutOfRangeException(nameof(amount), "Withdrawal amount must be positive");
-            if (Balance() - amount < MinimumBalance)
-                throw new InvalidOperationException("Insufficient funds for this withdrawal");
+            if (amount <= 0) throw new ArgumentOutOfRangeException(nameof(amount), "Withdrawal amount must be positive");
+            if (Balance() - amount < MinimumBalance) throw new InvalidOperationException("Insufficient funds for this withdrawal");
             return new BankAccount(_accountNumber, Balance() - amount);
         }
 
         public bool IsBetterThan(BankAccount other)
         {
-            if (other == null)
-                throw new ArgumentNullException(nameof(other), "Comparison account cannot be null");
+            if (other == null) throw new ArgumentNullException(nameof(other), "Comparison account cannot be null");
             return Balance() > other.Balance();
         }
 

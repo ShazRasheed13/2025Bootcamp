@@ -10,6 +10,7 @@ public class BankingTests
     {
         Assert.Throws<ArgumentException>(() => BankAccount.NewSavingsAccount("", 100));
         Assert.Throws<ArgumentOutOfRangeException>(() => BankAccount.NewSavingsAccount("123456789", -100));
+        Assert.Throws<ArgumentOutOfRangeException>(() => BankAccount.NewCurrentAccount("1234",9000));
     }
 
     [Fact]
