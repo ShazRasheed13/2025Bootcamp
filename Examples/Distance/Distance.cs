@@ -43,12 +43,6 @@ namespace Examples.Distance
         public static Distance operator -(Distance d1, Distance d2) =>
             d1.Subtract(d2);
 
-        public Distance Multiply(double factor) =>
-            new Distance(this._meters * factor);
-
-        public static Distance operator *(Distance d, double factor) =>
-            d.Multiply(factor);
-
     }
 }
 

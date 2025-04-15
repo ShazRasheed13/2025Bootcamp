@@ -34,10 +34,6 @@ public class DistanceTests
         Assert.Equal(_oneMeter, _oneKiloMeter - 999.0.Meters());
     }
 
-    [Fact] public void Multiplication() {
-        Assert.Equal(_oneKiloMeter, _oneMeter * 1000.0);
-    }
-
     [Fact]
     public void Comparison()
     {
