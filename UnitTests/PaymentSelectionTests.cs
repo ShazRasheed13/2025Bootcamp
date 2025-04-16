@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Examples.PaymentSelection;
-using Xunit;
+﻿using Examples.PaymentSelection;
 
 namespace UnitTests
 {
@@ -14,9 +8,9 @@ namespace UnitTests
         public void PaymentStrategyNotSet()
         {
             var cart = new ShoppingCart();
-            cart.AddItem("Item 1", 10.50);
-            cart.AddItem("Item 2", 20.75);
-            Assert.Throws<InvalidOperationException>(()=>cart.Checkout());
+            cart.AddItem("Item 1", 10.50m);
+            cart.AddItem("Item 2", 20.75m, 2);
+            Assert.Throws<InvalidOperationException>(()=>cart.Checkout(null!));
 
         }
 
@@ -24,21 +18,20 @@ namespace UnitTests
         public void CreditCardPayment()
         {
             var creditCardPayment = new CreditCardPayment();
-            double amount = 100.50;
-
+            const decimal amount = 100.50m;
             var result = creditCardPayment.ProcessPayment(amount);
 
             Assert.True(result.Success);
             Assert.NotNull(result.TransactionId);
             Assert.Equal(PaymentMethod.CreditCard, result.PaymentMethod);
-            Assert.Equal(100.50, result.TotalAmount);
+            Assert.Equal(100.50m, result.TotalAmount);
         }
 
         [Fact]
         public void PayPalPayment()
         {
             var payPalPayment = new PayPalPayment();
-            double amount = 75.25;
+            const decimal amount = 100.50m;
 
             var result = payPalPayment.ProcessPayment(amount);
 
@@ -51,7 +44,7 @@ namespace UnitTests
         public void BankTransferPayment()
         {
             var bankTransferPayment = new BankTransferPayment();
-            double amount = 200.00;
+            const decimal amount = 100.50m;
             var result = bankTransferPayment.ProcessPayment(amount);
             Assert.True(result.Success);
             Assert.Equal(PaymentMethod.BankTransfer, result.PaymentMethod);
@@ -63,27 +56,25 @@ namespace UnitTests
         {
             var cart = new ShoppingCart();
 
-            cart.AddItem("Item 1", 10.50);
-            cart.AddItem("Item 2", 20.75);
-            cart.AddItem("Item 3", 5.99);
+            cart.AddItem("Item 1", 10.50m, 2);
+            cart.AddItem("Item 2", 20.75m);
+            cart.AddItem("Item 3", 5.99m,2);
 
-            Assert.Equal(37.24, cart.CalculateTotal(), 2);
+            Assert.Equal(53.73m, cart.CalculateTotal(), 2);
         }
 
         [Fact]
         public void AfterPaymentCartTotalCleared()
         {
             var cart = new ShoppingCart();
-            cart.AddItem("Item 1", 10.50);
-            cart.AddItem("Item 2", 20.75);
-            var paymentStrategy = new CreditCardPayment();
-            cart.SetPaymentStrategy(paymentStrategy);
+            cart.AddItem("Item 1", 10.50m);
+            cart.AddItem("Item 2", 20.75m);
 
-            var result = cart.Checkout();
+            var result = cart.Checkout(new CreditCardPayment());
 
             Assert.True(result.Success);
             Assert.NotNull(result.TransactionId);
-            Assert.Equal(31.25, result.TotalAmount);
+            Assert.Equal(31.25m, result.TotalAmount);
             Assert.Equal(0, cart.CalculateTotal());
         }
 

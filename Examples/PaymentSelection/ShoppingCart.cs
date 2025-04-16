@@ -1,41 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Examples.PaymentSelection
+﻿namespace Examples.PaymentSelection
 {
-    public record CartItem(string Name, double Price);
+    public record CartItem(string Name, decimal Price, int Quantity);
 
     public class ShoppingCart
     {
-        private IPaymentStrategy? _paymentStrategy;
         private readonly List<CartItem> _items = [];
-
-        public void SetPaymentStrategy(IPaymentStrategy paymentMethod)
+        public void AddItem(string name, decimal price, int quantity = 1) => _items.Add(new CartItem(name, price, quantity));
+        public decimal CalculateTotal() => _items.Sum(item => item.Price * item.Quantity);
+        public PaymentResult Checkout(IPaymentStrategy paymentOption)
         {
-            _paymentStrategy = paymentMethod;
-        }
-
-        public void AddItem(string name, double price)
-        {
-            _items.Add(new CartItem(name, price));
-        }
-
-        public double CalculateTotal()
-        {
-            return _items.Sum(item => item.Price);
-        }
-
-        public PaymentResult Checkout()
-        {
-            var amount = CalculateTotal();
-            if (_paymentStrategy == null)
-                throw new InvalidOperationException("Payment strategy not set");
-            var result = _paymentStrategy.ProcessPayment(amount);
-            _items.Clear();
-            return result;
+           var result = PaymentGateway.GeneratePayment(CalculateTotal(), paymentOption).ProcessPayment();
+           if(result.Success) _items.Clear();
+           return result;
         }
     }
 }

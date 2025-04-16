@@ -32,6 +32,7 @@ public class DistanceTests
     public void Subtraction()
     {
         Assert.Equal(OneMeter, OneKiloMeter - 999.0.Meters());
+        Assert.Equal(999.0.Meters(), OneKiloMeter - OneMeter);
     }
 
     [Fact]
