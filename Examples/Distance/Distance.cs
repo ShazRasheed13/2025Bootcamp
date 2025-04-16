@@ -10,7 +10,7 @@ namespace Examples.Distance
 
     public class Distance
     {
-        private readonly double _meters; // Store everything in base unit (meters)
+        private readonly double _meters;
         private const double Epsilon = 1e-9;
 
         internal Distance(double meters)

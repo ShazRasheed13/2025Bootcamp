@@ -10,36 +10,36 @@ namespace UnitTests;
 
 public class DistanceTests
 {
-    private static readonly Distance _oneMeter = 1.0.Meters();
-    private static readonly Distance _oneKiloMeter = 1.0.KiloMeters();
-    private static readonly Distance _oneMile = 1.0.Miles();
+    private static readonly Distance OneMeter = 1.0.Meters();
+    private static readonly Distance OneKiloMeter = 1.0.KiloMeters();
+    private static readonly Distance OneMile = 1.0.Miles();
 
     [Fact]
     public void Equality()
     {
-        Assert.NotEqual(_oneMeter, _oneKiloMeter);
-        Assert.NotEqual(_oneMeter, new object());
-        Assert.NotEqual(_oneMeter, null);
+        Assert.NotEqual(OneMeter, OneKiloMeter);
+        Assert.NotEqual(OneMeter, new object());
+        Assert.NotEqual(OneMeter, null);
     }
 
     [Fact]
     public void Addition()
     {
-        Assert.Equal(_oneKiloMeter, _oneMeter + 999.0.Meters());
+        Assert.Equal(OneKiloMeter, OneMeter + 999.0.Meters());
     }
 
     [Fact]
     public void Subtraction()
     {
-        Assert.Equal(_oneMeter, _oneKiloMeter - 999.0.Meters());
+        Assert.Equal(OneMeter, OneKiloMeter - 999.0.Meters());
     }
 
     [Fact]
     public void Comparison()
     {
-        Assert.True(_oneKiloMeter.IsBetterThan(_oneMeter));
-        Assert.False(_oneKiloMeter.IsBetterThan(_oneMile));
-        Assert.True(_oneMile.IsBetterThan(_oneKiloMeter));
+        Assert.True(OneKiloMeter.IsBetterThan(OneMeter));
+        Assert.False(OneKiloMeter.IsBetterThan(OneMile));
+        Assert.True(OneMile.IsBetterThan(OneKiloMeter));
 
     }
 
