@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-
 namespace Examples.SystemLogs
 {
     public interface ILogVisitor
@@ -23,7 +20,7 @@ namespace Examples.SystemLogs
 
     public class SeverityReporterVisitor : ILogVisitor
     {
-        private readonly List<string> _report = new();
+        private readonly List<string> _report = [];
 
         public void Visit(InfoLog log) => 
             _report.Add($"[INFO] {log.Timestamp:HH:mm:ss} - {log.Message}");

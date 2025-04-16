@@ -1,5 +1,3 @@
-using System;
-
 namespace Examples.SystemLogs;
 
 public interface ILogEntry
@@ -7,44 +5,26 @@ public interface ILogEntry
     void Accept(ILogVisitor visitor);
 }
 
-public class InfoLog : ILogEntry
+public class InfoLog(string message, DateTime timestamp) : ILogEntry
 {
-    public string Message { get; }
-    public DateTime Timestamp { get; }
-
-    public InfoLog(string message, DateTime timestamp)
-    {
-        Message = message;
-        Timestamp = timestamp;
-    }
+    public string Message { get; } = message;
+    public DateTime Timestamp { get; } = timestamp;
 
     public void Accept(ILogVisitor visitor) => visitor.Visit(this);
 }
 
-public class WarningLog : ILogEntry
+public class WarningLog(string message, DateTime timestamp) : ILogEntry
 {
-    public string Message { get; }
-    public DateTime Timestamp { get; }
-
-    public WarningLog(string message, DateTime timestamp)
-    {
-        Message = message;
-        Timestamp = timestamp;
-    }
+    public string Message { get; } = message;
+    public DateTime Timestamp { get; } = timestamp;
 
     public void Accept(ILogVisitor visitor) => visitor.Visit(this);
 }
 
-public class ErrorLog : ILogEntry
+public class ErrorLog(string message, DateTime timestamp) : ILogEntry
 {
-    public string Message { get; }
-    public DateTime Timestamp { get; }
-
-    public ErrorLog(string message, DateTime timestamp)
-    {
-        Message = message;
-        Timestamp = timestamp;
-    }
+    public string Message { get; } = message;
+    public DateTime Timestamp { get; } = timestamp;
 
     public void Accept(ILogVisitor visitor) => visitor.Visit(this);
 }
