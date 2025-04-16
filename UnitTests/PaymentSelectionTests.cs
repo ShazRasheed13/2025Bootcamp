@@ -17,7 +17,7 @@ namespace UnitTests
         [Fact]
         public void CreditCardPayment()
         {
-            var creditCardPayment = new CreditCardPayment();
+            var creditCardPayment = PaymentGateway.CreditCard();
             const decimal amount = 100.50m;
             var result = creditCardPayment.ProcessPayment(amount);
 
@@ -30,7 +30,7 @@ namespace UnitTests
         [Fact]
         public void PayPalPayment()
         {
-            var payPalPayment = new PayPalPayment();
+            var payPalPayment = PaymentGateway.PayPal();
             const decimal amount = 100.50m;
 
             var result = payPalPayment.ProcessPayment(amount);
@@ -43,7 +43,7 @@ namespace UnitTests
         [Fact]
         public void BankTransferPayment()
         {
-            var bankTransferPayment = new BankTransferPayment();
+            var bankTransferPayment = PaymentGateway.BankTransfer();
             const decimal amount = 100.50m;
             var result = bankTransferPayment.ProcessPayment(amount);
             Assert.True(result.Success);
@@ -70,7 +70,7 @@ namespace UnitTests
             cart.AddItem("Item 1", 10.50m);
             cart.AddItem("Item 2", 20.75m);
 
-            var result = cart.Checkout(new CreditCardPayment());
+            var result = cart.Checkout(PaymentGateway.CreditCard());
 
             Assert.True(result.Success);
             Assert.NotNull(result.TransactionId);

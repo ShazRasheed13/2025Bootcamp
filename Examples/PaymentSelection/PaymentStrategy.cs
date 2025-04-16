@@ -1,20 +1,28 @@
-﻿namespace Examples.PaymentSelection
+﻿namespace Examples.PaymentSelection;
+
+public interface IPaymentStrategy
 {
-    public enum PaymentMethod
+    PaymentResult ProcessPayment(decimal amount);
+}
+
+public class PaymentGateway
+{
+    private readonly decimal _amount;
+    private readonly IPaymentStrategy _paymentOption;
+
+    private PaymentGateway(decimal amount, IPaymentStrategy paymentOption)
     {
-        CreditCard,
-        PayPal,
-        BankTransfer
+        _paymentOption = paymentOption ?? throw new InvalidOperationException("Payment strategy not set");
+        _amount = amount;
     }
 
-    public record PaymentResult(bool Success, string TransactionId, decimal TotalAmount, DateTime TransactionDate, PaymentMethod PaymentMethod);
+    public static PaymentGateway GeneratePayment(decimal amount, IPaymentStrategy paymentOption) => new(amount, paymentOption);
+    public PaymentResult ProcessPayment() => _paymentOption.ProcessPayment(_amount);
+    public static IPaymentStrategy CreditCard() => new CreditCardPayment();
+    public static IPaymentStrategy PayPal() => new PayPalPayment();
+    public static IPaymentStrategy BankTransfer() => new BankTransferPayment();
 
-    public interface IPaymentStrategy
-    {
-        PaymentResult ProcessPayment(decimal amount);
-    }
-
-    public class CreditCardPayment : IPaymentStrategy
+    private class CreditCardPayment : IPaymentStrategy
     {
         public PaymentResult ProcessPayment(decimal amount) =>
             new(
@@ -26,7 +34,7 @@
             );
     }
 
-    public class PayPalPayment : IPaymentStrategy
+    private class PayPalPayment : IPaymentStrategy
     {
         public PaymentResult ProcessPayment(decimal amount) =>
             new(
@@ -38,7 +46,7 @@
             );
     }
 
-    public class BankTransferPayment : IPaymentStrategy
+    private class BankTransferPayment : IPaymentStrategy
     {
         public PaymentResult ProcessPayment(decimal amount) =>
             new(
@@ -49,4 +57,13 @@
                 PaymentMethod.BankTransfer
             );
     }
+}
+
+public record PaymentResult(bool Success, string TransactionId, decimal TotalAmount, DateTime TransactionDate, PaymentMethod PaymentMethod);
+
+public enum PaymentMethod
+{
+    CreditCard,
+    PayPal,
+    BankTransfer
 }
